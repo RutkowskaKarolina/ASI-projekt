@@ -7,6 +7,12 @@ This project is a machine learning-powered web app that classifies Indian dishes
 ## Dataset
 This project is based on the [Indian Food Images Dataset](https://www.kaggle.com/datasets/iamsouravbanerjee/indian-food-images-dataset) from Kaggle, containing 4,000 images across 80 Indian food classes.
 
+## Preview
+
+Here's a preview of the Indian Food Classifier UI built with Streamlit:
+
+![App Screenshot](example/png.png)
+
 ## Tech Stack
 - **Kedro** – Data pipelines and project structure  
 - **AutoGluon** – Automated ML model training  
