@@ -159,3 +159,7 @@ venv.bak/
 
 # mlflow local runs
 mlruns/*
+
+# Don't ignore reports
+!data/08_reporting/
+!data/08_reporting/**
