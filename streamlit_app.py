@@ -53,20 +53,7 @@ st.markdown("""
         text-align: center;
         margin: 1rem 0;
     }
-    .upload-section {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        margin: 0.5rem 0;
-    }
-    .metric-card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        margin: 0.5rem 0;
-    }
+   
 </style>
 """, unsafe_allow_html=True)
 
@@ -92,37 +79,6 @@ def load_model():
         st.error(f"Error loading model: {str(e)}")
         return None
 
-
-@st.cache_data
-def load_food_categories():
-    """Load the list of food categories."""
-    raw_data_path = 'data/01_raw/indian_food'
-    if os.path.exists(raw_data_path):
-        categories = [d for d in os.listdir(raw_data_path)
-                      if os.path.isdir(os.path.join(raw_data_path, d))]
-        return sorted(categories)
-    else:
-        # Fallback categories based on the dataset structure
-        return [
-            "adhirasam", "aloo_gobi", "aloo_matar", "aloo_methi", "aloo_shimla_mirch",
-            "aloo_tikki", "anarsa", "ariselu", "bandar_laddu", "basundi", "bhatura",
-            "bhindi_masala", "biryani", "boondi", "butter_chicken", "chak_hao_kheer",
-            "cham_cham", "chana_masala", "chapati", "chhena_kheeri", "chicken_razala",
-            "chicken_tikka", "chicken_tikka_masala", "chikki", "daal_baati_churma",
-            "daal_puri", "dal_makhani", "dal_tadka", "dharwad_pedha", "doodhpak",
-            "double_ka_meetha", "dum_aloo", "gajar_ka_halwa", "gavvalu", "ghevar",
-            "gulab_jamun", "imarti", "jalebi", "kachori", "kadai_paneer", "kadhi_pakoda",
-            "kajjikaya", "kakinada_khaja", "kalakand", "karela_bharta", "kofta",
-            "kuzhi_paniyaram", "lassi", "ledikeni", "litti_chokha", "lyangcha",
-            "maach_jhol", "makki_di_roti_sarson_da_saag", "malapua", "misi_roti",
-            "misti_doi", "modak", "mysore_pak", "naan", "navrattan_korma", "palak_paneer",
-            "paneer_butter_masala", "phirni", "pithe", "poha", "poornalu", "pootharekulu",
-            "qubani_ka_meetha", "rabri", "rasgulla", "ras_malai", "sandesh", "shankarpali",
-            "sheera", "sheer_korma", "shrikhand", "sohan_halwa", "sohan_papdi",
-            "sutar_feni", "unni_appam"
-        ]
-
-
 def preprocess_image(image):
     """Preprocess the uploaded image for prediction."""
     try:
@@ -143,11 +99,10 @@ def preprocess_image(image):
         return None
 
 
-def predict_food(model, image, categories):
+def predict_food(model, image, label_map):
     """Make prediction on the uploaded image."""
     try:
         if model is None:
-            # Demo mode - provide sample predictions
             st.info("⚠️ Running in DEMO mode - showing sample predictions")
             sample_dishes = ["butter_chicken", "gulab_jamun", "biryani", "naan", "paneer_butter_masala"]
             import random
@@ -161,24 +116,24 @@ def predict_food(model, image, categories):
             predicted_category = random.choice(sample_dishes)
             return predicted_category, 0.2
 
-        # Create a temporary DataFrame for prediction
+        from tempfile import NamedTemporaryFile
+
+        with NamedTemporaryFile(suffix=".jpg", delete=False) as tmp:
+            image.save(tmp.name)  # save image to a temporary file
+            image_path = tmp.name
+
         temp_df = pd.DataFrame({
-            'image': [image],
-            'label': [0]  # Dummy label
+            'image': [image_path],
+            'label': [0]
         })
 
-        # Make prediction
+        # Predict
         start_time = time.time()
         predictions = model.predict(temp_df)
         inference_time = time.time() - start_time
 
-        # Get the predicted label and normalize it
-        predicted_category_raw = str(predictions[0])
-        predicted_category = predicted_category_raw.lower().strip().replace(" ", "_")
-
-        # Check if it's in known categories
-        if predicted_category not in categories:
-            predicted_category = "Unknown"
+        pred_index = int(predictions[0])
+        predicted_category = label_map.get(pred_index, "Unknown")
 
         return predicted_category, inference_time
 
@@ -190,6 +145,16 @@ def predict_food(model, image, categories):
         predicted_category = random.choice(sample_dishes)
         return predicted_category, 0.2
 
+@st.cache_data
+def load_label_map():
+    """Load the label map from saved pickle file."""
+    label_map_path = "data/06_models/label_map.pkl"
+    if os.path.exists(label_map_path):
+        with open(label_map_path, "rb") as f:
+            return pickle.load(f)
+    else:
+        st.warning("Label map not found. Running in DEMO mode.")
+        return {}
 
 def main():
     # Header
@@ -223,10 +188,8 @@ def main():
         st.write("2. Wait for the model to process")
         st.write("3. View the prediction and confidence")
 
-    # Load model and categories
-    with st.spinner("Loading model..."):
-        model = load_model()
-        categories = load_food_categories()
+    model = load_model()
+    label_map = load_label_map()
 
     if model is None:
         st.warning("⚠️ **Demo Mode Active**")
@@ -272,7 +235,7 @@ def main():
                 # Make prediction
                 if st.button("🔍 Classify Dish", type="primary"):
                     with st.spinner("Analyzing image..."):
-                        predicted_category, inference_time = predict_food(model, processed_image, categories)
+                        predicted_category, inference_time = predict_food(model, processed_image, label_map)
 
                     if predicted_category and inference_time:
                         st.markdown('<div class="prediction-box">', unsafe_allow_html=True)
@@ -335,4 +298,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main() 
+    main()
