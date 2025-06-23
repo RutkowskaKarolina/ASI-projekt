@@ -1,0 +1,39 @@
+train_df:
+  type: kedro_datasets.pandas.CSVDataset
+  filepath: data/02_intermediate/train_data.csv
+
+val_df:
+  type: kedro_datasets.pandas.CSVDataset
+  filepath: data/02_intermediate/val_data.csv
+
+test_df:
+  type: kedro_datasets.pandas.CSVDataset
+  filepath: data/02_intermediate/test_data.csv
+
+trained_model_predictor:
+  type: pickle.PickleDataset
+  filepath: data/06_models/trained_model_predictor.pkl
+
+test_accuracy:
+  type: kedro.io.MemoryDataset
+
+# Model Validation Outputs
+performance_metrics:
+  type: kedro.io.MemoryDataset
+
+confusion_matrix_path:
+  type: kedro_datasets.text.TextDataset
+  filepath: data/08_reporting/confusion_matrix.png
+
+classification_report_path:
+  type: kedro_datasets.text.TextDataset
+  filepath: data/08_reporting/classification_report.txt
+
+model_size_analysis:
+  type: kedro.io.MemoryDataset
+
+improvement_recommendations:
+  type: kedro.io.MemoryDataset
+
+final_assessment:
+  type: kedro.io.MemoryDataset
