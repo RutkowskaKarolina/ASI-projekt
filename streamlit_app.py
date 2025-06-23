@@ -54,12 +54,11 @@ st.markdown("""
         margin: 1rem 0;
     }
     .upload-section {
-        background: #f8f9fa;
-        padding: 2rem;
-        border-radius: 15px;
-        border: 2px dashed #dee2e6;
-        text-align: center;
-        margin: 1rem 0;
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        margin: 0.5rem 0;
     }
     .metric-card {
         background: white;
@@ -78,7 +77,7 @@ def load_model():
     try:
         pickle_path = 'data/06_models/trained_model_predictor.pkl'
         if os.path.exists(pickle_path):
-            st.success("Loading model from pickle file...")
+            st.success("Model loaded from pickle file")
             with open(pickle_path, 'rb') as f:
                 model = pickle.load(f)
             if hasattr(model, '_learner') and model._learner is not None:
