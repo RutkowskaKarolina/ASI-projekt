@@ -313,7 +313,7 @@ def main():
         sample_predictions = [
             ("Butter Chicken", "95.2%", "2 min ago"),
             ("Gulab Jamun", "87.1%", "5 min ago"),
-            ("Biryani", "82.3%", "9 min ago"),
+            ("Biryani", "82.3%", "8 min ago"),
             ("Naan", "91.7%", "12 min ago")
         ]
 
