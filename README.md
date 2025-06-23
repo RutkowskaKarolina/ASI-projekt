@@ -31,3 +31,25 @@ streamlit run app.py
 ```bash
 kedro run
 ```
+## Model Training
+
+The model was trained using the Kedro pipeline with AutoGluon for image classification.  
+To retrain the model from scratch:
+
+```bash
+kedro run --pipeline model_training
+```
+
+## Data and Model Setup
+Due to repository size limitations, the dataset and trained model are not included in this GitHub repository.
+
+## Project Data Structure (Kedro-style)
+```bash
+data/
+├── 01_raw/                  # Place your dataset here
+```
+## How to Download the Dataset
+Download the dataset from Kaggle: [Indian Food Images Dataset](https://www.kaggle.com/datasets/iamsouravbanerjee/indian-food-images-dataset)
+
+## Unzip the contents into the folder:
+data/01_raw/indian_food/
