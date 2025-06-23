@@ -2,7 +2,7 @@
 
 [![Open in HF Spaces](https://img.shields.io/badge/🤗_Open-in_HF_Spaces-blue?logo=huggingface)](https://huggingface.co/spaces/ska24680/indian-food-classifier)
 
-This project is a machine learning-powered web app that classifies Indian dishes from images. It can recognize 80 different types of dishes such as dosa, samosa, butter chicken, and more.
+This project is a machine learning-powered web app that classifies Indian dishes from images with 79.88% accuracy. It can recognize 80 different types of dishes such as dosa, samosa, butter chicken, and more.
 
 ## Dataset
 This project is based on the [Indian Food Images Dataset](https://www.kaggle.com/datasets/iamsouravbanerjee/indian-food-images-dataset) from Kaggle, containing 4,000 images across 80 Indian food classes.
