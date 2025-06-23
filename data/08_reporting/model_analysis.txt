@@ -1,0 +1,4 @@
+MODEL SIZE ANALYSIS
+====================
+Total files: 8
+Model size: 745.30 MB (0.73 GB)

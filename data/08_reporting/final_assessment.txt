@@ -1,0 +1,5 @@
+FINAL MODEL ASSESSMENT
+=========================
+
+Accuracy: 0.7987 (79.88%)
+Avg Inference Time: 0.221 seconds
