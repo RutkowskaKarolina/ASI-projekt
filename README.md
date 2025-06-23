@@ -22,9 +22,9 @@ git clone https://github.com/RutkowskaKarolina/ASI-projekt.git
 cd ASI-projekt
 pip install -r requirements.txt
 ```
-## Running the App
+## Running the App locally
 ```bash
-streamlit run app.py
+streamlit run streamlit_app.py
 ```
 
 ## Running the ML Pipeline (Optional)
