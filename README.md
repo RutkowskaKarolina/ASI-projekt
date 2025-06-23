@@ -11,7 +11,7 @@ This project is based on the [Indian Food Images Dataset](https://www.kaggle.com
 
 Here's a preview of the Indian Food Classifier UI built with Streamlit:
 
-![App Screenshot](example/png.png)
+![App Screenshot](example/img.png)
 
 ## Tech Stack
 - **Kedro** – Data pipelines and project structure  
