@@ -46,7 +46,9 @@ Due to repository size limitations, the dataset and trained model are not includ
 ## Project Data Structure (Kedro-style)
 ```bash
 data/
-├── 01_raw/                  # Place your dataset here
+├── 01_raw/                    # Place your dataset here
+└── 06_models/                 # The resulting trained_model_predictor.pkl file will be saved here
+    └── trained_model_predictor.pkl
 ```
 ## How to Download the Dataset
 Download the dataset from Kaggle: [Indian Food Images Dataset](https://www.kaggle.com/datasets/iamsouravbanerjee/indian-food-images-dataset)
