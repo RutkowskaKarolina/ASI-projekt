@@ -46,7 +46,11 @@ kedro run --pipeline model_training
 ```
 
 ## Data and Model Setup
-Due to repository size limitations, the dataset and trained model are not included in this GitHub repository.
+Due to repository size limitations, the dataset and trained model are not included in this GitHub repository. 
+
+Download the trained model from Google Drive: [Trained Model](https://drive.google.com/drive/folders/1PEKBdiWPWfBkbp3WwfLwhl2dPrDHHlw6?usp=sharing)
+
+Download the dataset from Kaggle: [Indian Food Images Dataset](https://www.kaggle.com/datasets/iamsouravbanerjee/indian-food-images-dataset)
 
 ## Project Data Structure (Kedro-style)
 ```bash
@@ -55,8 +59,6 @@ data/
 └── 06_models/                 # The resulting trained_model_predictor.pkl file will be saved here
     └── trained_model_predictor.pkl
 ```
-## How to Download the Dataset
-Download the dataset from Kaggle: [Indian Food Images Dataset](https://www.kaggle.com/datasets/iamsouravbanerjee/indian-food-images-dataset)
 
 ## Unzip the contents into the folder:
 data/01_raw/indian_food/
